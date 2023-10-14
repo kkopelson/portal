@@ -1,0 +1,15 @@
+{
+    "name": "bitnami/htdocs",
+    "autoload": {
+        "psr-4": {
+            "Bitnami\\Htdocs\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ken Kopelson",
+            "email": "ken.kopelson@headwaterco.com"
+        }
+    ],
+    "require": {}
+}

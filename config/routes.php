@@ -3,5 +3,5 @@
 return [
     '/' => [HomeController::class, 'index'],
     '/login' => [LoginController::class, 'showLoginForm'],
-    // ... other routes ...
+    '/login-process' => [LoginController::class, 'processLogin']
 ];

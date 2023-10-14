@@ -1,19 +1,21 @@
 <?php
-require_once __DIR__ . '/../src/Router.php';
-require_once __DIR__ . '/../src/controllers/HomeController.php';
+require __DIR__ . '/../vendor/autoload.php'; // Composer's autoload
 
 $router = new Router();
 
-$router->add('/', [HomeController::class, 'index']);
-$router->add('/login', [LoginController::class, 'showLoginForm']);
+// Load routes from our configuration
+$routes = require __DIR__ . '/../config/routes.php';
+foreach ($routes as $uri => $controllerAction) {
+    $router->add($uri, $controllerAction);
+}
 
-$uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-$controllerAction = $router->dispatch($uri);
+$requestUri = $_SERVER['REQUEST_URI'];
+$controllerAction = $router->dispatch($requestUri);
 
 if ($controllerAction) {
-    list($controller, $action) = $controllerAction;
-    (new $controller)->$action();
+    [$controller, $method] = $controllerAction;
+    $controllerInstance = new $controller;
+    $controllerInstance->$method();
 } else {
-    // Handle 404, e.g., load a 404 view
-    require __DIR__ . '/../views/404.php';
+    // Handle 404 error, e.g., render a 404 view
 }
