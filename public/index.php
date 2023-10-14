@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php'; // Composer's autoload
+require '../vendor/autoload.php';
 
 $router = new Router();
 
