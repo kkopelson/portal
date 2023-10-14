@@ -1,4 +1,5 @@
 <?php
+namespace App\Controllers;
 
 class LoginController {
     public function showLoginForm() {

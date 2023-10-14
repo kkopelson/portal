@@ -1,21 +1,21 @@
 <?php
-require '../vendor/autoload.php';
 
-$router = new Router();
+require_once __DIR__ . '/../vendor/autoload.php';
 
-// Load routes from our configuration
-$routes = require __DIR__ . '/../config/routes.php';
-foreach ($routes as $uri => $controllerAction) {
-    $router->add($uri, $controllerAction);
-}
+$router = new App\Router();
 
-$requestUri = $_SERVER['REQUEST_URI'];
-$controllerAction = $router->dispatch($requestUri);
+// Define your routes and their corresponding controller actions
+$router->add('/login', [App\Controllers\LoginController::class, 'showLoginForm']);
+// ... other routes ...
+
+// Dispatch the router
+$controllerAction = $router->dispatch($_SERVER['REQUEST_URI']);
 
 if ($controllerAction) {
-    [$controller, $method] = $controllerAction;
-    $controllerInstance = new $controller;
-    $controllerInstance->$method();
+    $controller = new $controllerAction[0]();
+    $controller->{$controllerAction[1]}();
 } else {
-    // Handle 404 error, e.g., render a 404 view
+    // Handle 404
+    echo "Page not found";
 }
+
