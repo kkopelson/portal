@@ -1,8 +1,11 @@
 <?php
-
+phpinfo();
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$router = new App\Router();
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$router = new App\Core\Router();
 
 // Define your routes and their corresponding controller actions
 $router->add('/login', [App\Controllers\LoginController::class, 'showLoginForm']);

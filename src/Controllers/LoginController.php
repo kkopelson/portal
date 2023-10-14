@@ -1,15 +1,23 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\CompanyModel;
+use App\Views\LoginView;
+
 class LoginController {
-    public function showLoginForm() {
-        // Render the login form
-        require __DIR__ . '/../../views/login.php';
+
+    private $model;
+    private $view;
+
+    public function __construct() {
+        $this->model = new CompanyModel();
+        $this->view = new LoginView();
     }
 
-    public function processLogin() {
-        // Here, you'll handle the form submission, check user credentials, etc.
-        // If successful, redirect to a dashboard or similar.
-        // If unsuccessful, redirect back to login with an error.
+    public function showLoginForm() {
+        $hwcompany = $this->model->determineCompany($_GET['Company'] ?? null);
+        $mcdata = $this->model->getMCarray($link, $hwcompany); // Note: You'll need to adjust how $link is provided
+        $this->view->renderLogin($mcdata, $hwcompany);
     }
+
 }
