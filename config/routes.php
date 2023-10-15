@@ -6,5 +6,6 @@ use App\Controllers\LoginController;
 return [
     '/' => [HomeController::class, 'index'],
     '/login' => [LoginController::class, 'showLoginForm'],
-    '/login-process' => [LoginController::class, 'processLogin']
+    '/login-process' => [LoginController::class, 'processLogin'],
+    '/home' => [HomeController::class, 'index'],
 ];
