@@ -1,15 +1,21 @@
 <?php
-phpinfo();
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
+$config = require '../config/database.php';
+
+$db = new App\Database\Database($config['database']);
+$pdo = $db->connect();
+
 $router = new App\Core\Router();
 
-// Define your routes and their corresponding controller actions
-$router->add('/login', [App\Controllers\LoginController::class, 'showLoginForm']);
-// ... other routes ...
+$routes = require '../config/routes.php'; // Include your routes
+
+foreach ($routes as $route => $controllerAction) {
+    $router->add($route, $controllerAction);
+}
 
 // Dispatch the router
 $controllerAction = $router->dispatch($_SERVER['REQUEST_URI']);
@@ -21,4 +27,3 @@ if ($controllerAction) {
     // Handle 404
     echo "Page not found";
 }
-
